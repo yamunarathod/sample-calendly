@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calendly Events</title>
+</head>
+<body>
+  <h1>Available Calendly Events</h1>
+  
+  <ul>
+    <% if (events.length > 0) { %>
+      <% events.forEach(event => { %>
+        <li>
+          <strong>Event Type:</strong> <%= event.event_type.name %><br>
+          <strong>Start Time:</strong> <%= new Date(event.start_time).toLocaleString() %><br>
+          <strong>End Time:</strong> <%= new Date(event.end_time).toLocaleString() %><br>
+          <strong>Status:</strong> <%= event.status %><br>
+        </li>
+      <% }) %>
+    <% } else { %>
+      <li>No events available.</li>
+    <% } %>
+  </ul>
+</body>
+</html>

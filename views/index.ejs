@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -11,9 +11,125 @@
     <h1>Register and Schedule with Calendly</h1>
     <p>Use the calendar below to book a meeting:</p>
 
-    <!-- Calendly Inline Widget -->
     <div class="calendly-inline-widget" data-url="https://calendly.com/yamuna-craftech360" style="min-width:320px;height:630px;"></div>
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
   </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schedule a Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    input, select, button {
+      margin-bottom: 15px;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Schedule Your Demo</h2>
+    <form id="scheduleForm">
+      <input type="text" id="name" placeholder="Your Name" required>
+      <input type="email" id="email" placeholder="Your Email" required>
+      <input type="tel" id="phone" placeholder="Your Phone Number" required>
+      <label for="demoTime">Choose a time for your demo:</label>
+      <input type="datetime-local" id="demoTime" required>
+      <button type="submit">Schedule Demo</button>
+    </form>
+    <div id="responseMessage"></div>
+  </div>
+
+  <script>
+    document.getElementById('scheduleForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Get user input
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const demoTime = document.getElementById('demoTime').value;
+
+      // Prepare request body
+      const data = {
+        name,
+        email,
+        phone,
+        demoTime
+      };
+
+      try {
+        // Make POST request to the backend API to schedule a demo
+        const response = await fetch('/schedule-demo', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        // Show success or error message
+        if (response.ok) {
+          document.getElementById('responseMessage').innerHTML = `<p style="color: green;">${result.message}</p>`;
+        } else {
+          document.getElementById('responseMessage').innerHTML = `<p style="color: red;">${result.message}</p>`;
+        }
+      } catch (error) {
+        document.getElementById('responseMessage').innerHTML = `<p style="color: red;">An error occurred: ${error.message}</p>`;
+      }
+    });
+
+    
+  </script>
+
 </body>
 </html>
